@@ -1,0 +1,78 @@
+<%= form_for @contact, :html => { :class => "form-horizontal contact" } do |f| %>
+
+    <% if @contact.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@contact.errors.count, "error") %> prohibited this contact from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @contact.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :Name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :Name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@contact[:Name]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :Company, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :Company, :class => 'form-control' %>
+    </div>
+    <%= error_span(@contact[:Company]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :Age, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :Age, :class => 'form-control' %>
+    </div>
+    <%= error_span(@contact[:Age]) %>
+  </div>
+  <div class="control-group">
+    <%= f.label :Email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :Email, :class => 'form-control' %>
+    </div>
+    <%= error_span(@contact[:Email]) %>
+  </div>
+  <br><br>
+<h1>Skills</h1>
+
+<table class="table table-striped">
+  <% for skill in @skills -%>
+  <tr>
+  <td>
+        <%= check_box_tag('skill_list[]', skill.id, @contact.skills.collect {|obj| obj.id}.include?(skill.id)) %>
+ &nbsp; <%= skill.name %>
+        </td></tr>
+  <% end -%>
+  </table>
+
+<h1>Groups</h1>
+  <table class="table table-striped">
+  <% for group in @groups -%>
+  <tr>
+  <td>
+        <%= check_box_tag('group_list[]', group.id, @contact.groups.collect {|obj| obj.id}.include?(group.id)) %>
+ &nbsp; <%= group.name %>
+        </td></tr>
+  <% end -%>
+  </table>
+     <br><br>
+   <%#= f.submit nil, :class => 'btn btn-primary' %>
+  <%#= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            contacts_path, :class => 'btn btn-default' %>
+    
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            contacts_path, :class => 'btn btn-default' %>
+
+<% end %>
